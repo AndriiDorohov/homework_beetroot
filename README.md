@@ -27,7 +27,7 @@ Write a program, which has two print statements to print the following text
 
 `#`   `    ` `      ` ` `       `#`
 
-`#`   `    ` `      ` ` `       `#`
+`#`   `    ` `            `#`
 
 ###########
 
