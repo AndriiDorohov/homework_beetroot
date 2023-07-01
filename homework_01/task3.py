@@ -1,6 +1,6 @@
-Task 3
-Write a program, which has two print statements to print the following text
-(capital letters "O" and "H", made from "#" symbols):
+# Task 3
+# Write a program, which has two print statements to print the following text
+# (capital letters "O" and "H", made from "#" symbols):
 
 #########
 #       #
@@ -14,4 +14,6 @@ Write a program, which has two print statements to print the following text
 #       #
 #       #
 
-print(" #########\n","#\t\t", "#\n","#\t\t", "#\n","#\t\t", "#\n","#########\n\n","#\t\t", "#\n","#\t\t", "#\n","#########\n","#\t\t", "#\n","#\t\t","#\n")
+print(" #########\n", "#\t\t", "#\n", "#\t\t", "#\n", "#\t\t", "#\n",
+      "#########\n\n", "#\t\t", "#\n", "#\t\t", "#\n", "#########\n",
+      "#\t\t", "#\n", "#\t\t", "#\n")
