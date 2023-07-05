@@ -17,3 +17,16 @@
 # Use built-in function len() on an input string
 # Use positive indexing to get the first characters of a string and
 # negative indexing to get the last characters
+
+str_item = input("Input the text: ")
+result = ""
+
+if len(str_item) < 2:
+    result = "Result: Empty String"
+elif len(str_item) == 2:
+    result =  f"Result: {str_item}{str_item}"
+elif len(str_item) >= 4:
+    result = f"Result: {str_item[0:2]}{str_item[-2:]}"
+
+
+print(result)
