@@ -8,7 +8,6 @@
 # “Hello <name>, on your next birthday you’ll be <age+1> years”
 
 def user_details():
-    global user_name, user_age
     user_list = input("Enter your name and age separated by a space").split()
     return (user_list[0], int(user_list[1]))
 
