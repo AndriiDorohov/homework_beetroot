@@ -15,7 +15,7 @@ str_a = input("Input a & b with space: ").split()
 try:
      int_b = [int(x) for x in str_a]
      if int_b[1] == 0:
-          print('ZeroDivisionError')
+          print('ZeroDivisionError - cannot divide by zero')
      else:
           print(calc_val(*int_b))
 
