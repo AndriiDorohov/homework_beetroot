@@ -49,56 +49,56 @@ class Product:
 			self.price = price
 
 class ProductStore():
-		revenue = 0
-		discount_counter = 0
+		revenue = 0  #Змінна для пірахунку загальної суми продажів через метод sell_product
+		discount_counter = 0  #Змінна для зберігання дискоунту, який мі потім вирахуємо із загального прибутку з продажу
 
 		def __init__(self) -> None:
 			pass
 
 		def add(self, product, amount):
 			self.amount = amount
-			if product.type not in data_cat:
+			if product.type not in data_cat:   #Додаєм новий розділ при відсутності
 				data_cat[product.type] = [{"product": product.name, "amount": self.amount, "price": round((product.price * 1.3), 2)}]
 			else:
-				action_chk = False
+				action_chk = False   #Якщо розділ присутній, шукаємо по ньому потрібні ключі
 				for item in data_cat[product.type]:
 					if item["product"] == product.name:
-						item["amount"] += self.amount
+						item["amount"] += self.amount  #Збільшуємо кількість товару на вказане значення
 						action_chk = True
 						break
-				if action_chk == False:
+				if action_chk == False:  #Якщо вимикач не спрацював, значить товар у цьому розділі відсутній і ми його додаємо
 					data_cat[product.type].append({"product": product.name, "amount": self.amount, "price": round((product.price * 1.3), 2)})
 
 
 		def set_discount(self, identifier, percent, identifier_type="name"):
 			self.percent = percent
-			for item in data_cat[identifier]:
+			for item in data_cat[identifier]:   #Додаємо поле зі знижкою, щоб надалі порахувати дисконт
 				if item['product'] == identifier_type:
 					item['discount'] = self.percent
 					break
 
 		def sell_product(self, product_name, amount):
 			self.amount = amount
-			action_chk = False
-			for item in data_cat:
-				for count in data_cat[item]:
+			action_chk = False   #Лічильник для перевірки на наявність даного продукту
+			for item in data_cat:  #Проходимся по категоріям
+				for count in data_cat[item]:  #Проходимось по ключам у середині списків
 					if count["product"] == product_name:
-						count["amount"] -= self.amount
-						if count.get("discount", None) != None:
+						count["amount"] -= self.amount  #Видаляємо продану кількість товару
+						if count.get("discount", None) != None:  #При наявності ключа дисконту, вираховуємо процент дисконту з проданого товару
 							self.discount_counter += self.amount * count["price"] * int(count["discount"][0:-1]) / 100
-						self.revenue += self.amount * count["price"]
+						self.revenue += self.amount * count["price"]  #Вираховуємо загальну суму продажу
 						action_chk = True
 						break
 			if action_chk == False:
 				print(f'The product "{product_name}" is not in the database')
 
-		def get_income(self):
+		def get_income(self):  #Друкуємо загальну суму, потім із прибутку в 30% вираховуємо процент дисконту
 			print(f'Total sales: {self.revenue} $ , total profit: {round((self.revenue * 0.3 - self.discount_counter), 2)} $')
 
-		def get_all_products(self):
+		def get_all_products(self):  #Друкуємо базу даних
 			print(f'All product: {json.dumps(data_cat, indent=4)}')
 
-		def get_product_info(self, product_name):
+		def get_product_info(self, product_name):  #Виводимо інформацію по окремому товару
 			action_chk = False
 			for item in data_cat:
 				for count in data_cat[item]:
