@@ -40,7 +40,7 @@
 
 import json
 
-data_cat = {}
+data_cat = {}  #База даних, куди зберігатимемо товар. Надалі можна зберігати у файлі
 
 class Product:
 		def __init__(self, type: str, name: str, price: float) -> None:

@@ -8,3 +8,24 @@
 
 # class CustomException(Exception):
 # def __init__(self, msg):
+
+class CustomException(Exception):
+		def __init__(self, msg):
+				super().__init__(msg)
+				self.msg = msg
+
+		def write_text(self):
+				with open('logs.txt', 'a') as file:
+						file.write(self.msg + '\n')
+
+try:
+		raise CustomException("Test Failures")
+except CustomException as e:
+		print("Error:", e.msg)
+		e.write_text()
+
+try:
+		raise CustomException("Wrong input")
+except CustomException as e:
+		print("Error:", e.msg)
+		e.write_text()
