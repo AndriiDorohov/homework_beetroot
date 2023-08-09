@@ -50,7 +50,7 @@ class Product:
 
 class ProductStore():
 		revenue = 0  #Змінна для пірахунку загальної суми продажів через метод sell_product
-		discount_counter = 0  #Змінна для зберігання дискоунту, який мі потім вирахуємо із загального прибутку з продажу
+		discount_counter = 0  #Змінна для зберігання дискоунту, який ми потім вирахуємо із загального прибутку з продажу
 
 		def __init__(self) -> None:
 			pass
@@ -93,7 +93,7 @@ class ProductStore():
 				print(f'The product "{product_name}" is not in the database')
 
 		def get_income(self):  #Друкуємо загальну суму, потім із прибутку в 30% вираховуємо процент дисконту
-			print(f'Total sales: {self.revenue} $ , total profit: {round((self.revenue * 0.3 - self.discount_counter), 2)} $')
+			print(f'Total sales: {self.revenue} $, total profit: {round((self.revenue * 0.3 - self.discount_counter), 2)} $')
 
 		def get_all_products(self):  #Друкуємо базу даних
 			print(f'All product: {json.dumps(data_cat, indent=4)}')
@@ -131,5 +131,5 @@ s.sell_product('Sub Woofer', 25)
 s.get_all_products()
 s.sell_product('Lamp', 10)
 s.get_product_info('Ramen')
-s.get_product_info('Lamp')
+s.get_product_info('Sofa')
 s.get_income()
