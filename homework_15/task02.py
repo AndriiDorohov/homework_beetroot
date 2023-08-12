@@ -26,65 +26,69 @@
 # class Author:
 #     pass
 
-class Author:
+class Author:     # Конструктор класу Author
 		def __init__(self, name, country, birthday, books = []) -> None:
 			self.name = name
 			self.country = country
 			self.birthday = birthday
 			self.books_list = books
-
+# Перетворення об'єкту в рядок для виведення
 		def __str__(self):
 			books_mod = ' '.join([f'"{item}"' for item in self.books_list])
 			return f'AUTHOR:         {self.name},\nCOUNTRY:        {self.country},\nDATE OF BIRTH:  {self.birthday},\nBOOKS:          {books_mod}\n'
-
+# Перетворення об'єкту в рядок для представлення
 		def __repr__(self):
 			books_mod = ' '.join([f"'{item}'" for item in self.books_list])
 			return f"Author(name='{self.name}', country={self.country}, year={self.birthday}, books='{books_mod}')"
 
+
 class Book:
 		total_books = 0
 
+# Конструктор класу Book
 		def __init__(self, name, year, author: Author) -> None:
 			self.name = name
 			self.year = year
 			self.author = author
 			Book.total_books += 1
-
+# Перетворення об'єкту в рядок для виведення
 		def __str__(self):
 			return f"BOOK TITLE ADD: '{self.name}',\nYEAR:           {self.year},\n{self.author}"
-
+# Перетворення об'єкту в рядок для представлення
 		def __repr__(self):
 			return f"Book(name='{self.name}', year={self.year}, author='{self.author}')"
 
+
 class Library:
+# Конструктор класу Library
 		def __init__(self,name, books = [], authors = []) -> None:
 			self.name_lib = name
 			self.books_list = books
 			self.authors_list = authors
-
+# Додавання нової книги до бібліотеки
 		def new_book(self, name: str, year: int, author: Author):
 			book = Book(name, year, author)
 			self.books_list.append(book)
 			return book
-
+# Групування книг за автором
 		def group_by_author(self, author: Author):
 			print(f"NAME AUTHOR FOR GROUP: {author.name}\n")
 			for book in self.books_list:
 				if book.author.name == author.name:
 					print(f"FINISHED BOOK IN LIST:\n{book}\n")
 			return author
-
+# Групування книг за роком видання
 		def group_by_year(self, year: int):
 			gr = [book for book in self.books_list if book.year == year]
 			for book in gr:
 				print(f"SORTED BOOKS BY YEAR:\n{book}\n")
 			return gr
-
+# Перетворення об'єкту в рядок для виведення
 		def __str__(self):
 			books = "\n".join(str(book) for book in self.books_list)
 			authors = "\n".join(str(author) for author in self.authors_list)
 			return f"LIBRARY NAME: {self.name_lib},\nBOOKS ADDED:\n{books}\nCOLLECTION AUTORS:\n{authors}\n"
-
+# Перетворення об'єкту в рядок для представлення
 		def __repr__(self):
 				return "You just called __repr__"
 
@@ -112,8 +116,6 @@ print(library)
 print("______________________Add new book_______________________________")
 add_book = library.new_book("Soumission", 2015, author4)
 print(add_book)
-
 print("______________________Group books by author and year_______________________________")
 grouped_by_author = library.group_by_author(author3)
-
 grouped_by_year = library.group_by_year(2011)
