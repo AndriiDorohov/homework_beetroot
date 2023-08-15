@@ -52,7 +52,10 @@ class TVController:
 		return self.channels[self.num]
 
 	def next_channel(self) -> str:
-		return self.channels[self.num + 1]
+		if self.num + 1 == len(self.channels):
+			return self.channels[0]
+		else:
+			return self.channels[self.num + 1]
 
 	def previous_channel(self) -> str:
 		return self.channels[self.num - 1]
@@ -75,3 +78,6 @@ print(f"Pervios channel:    {controller.previous_channel()}")
 print(f"Current channel:    {controller.current_channel()}")
 print(f"Exist 4 channel:    {controller.is_exist(4)}")
 print(f"Exist BBC channel:  {controller.is_exist('BBC')}")
+
+print(f"Current channel:    {controller.turn_channel(3)}")
+print(f"Next channel:       {controller.next_channel()}")

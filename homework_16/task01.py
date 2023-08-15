@@ -10,7 +10,6 @@
 # https://en.wikipedia.org/wiki/Email_address
 
 class CheckEmail():
-
 		def __init__(self, e_mail : str) -> None:
 			self.e_mail = e_mail
 			self.validate()

@@ -22,3 +22,33 @@
 #         self.name = name
 #         self.company = company
 #         self.boss = boss
+
+class Boss:
+		def __init__(self, id_: int, name: str, company: str):
+			self.id = id_
+			self.name = name
+			self.company = company
+			self.workers = []
+
+		@property
+		def list_workers(self):
+				"""return value of _var"""
+				return self._var
+
+		@list_workers.setter
+		def list_workers(self, value):
+				self._var = value
+
+		@list_workers.deleter
+		def list_workers(self):
+				del self._var
+
+class Worker:
+		def __init__(self, id_: int, name: str, company: str, boss: Boss):
+			self.id = id_
+			self.name = name
+			self.company = company
+			self.boss = boss
+
+boss1 = Boss(1, "Garry", "Best employment")
+worker1 = Worker
