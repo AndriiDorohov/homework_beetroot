@@ -23,6 +23,11 @@
 #         self.company = company
 #         self.boss = boss
 
+def generate_id(counter=[1]):
+		new_id = counter[0]
+		counter[0] += 1
+		return new_id
+
 class Boss:
 		def __init__(self, id_: int, name: str, company: str):
 			self.id = id_
@@ -32,16 +37,15 @@ class Boss:
 
 		@property
 		def list_workers(self):
-				"""return value of _var"""
-				return self._var
+			return self.workers
 
 		@list_workers.setter
-		def list_workers(self, value):
-				self._var = value
+		def list_workers(self, worker):
+			if isinstance(worker, Worker):
+				self.workers.append(worker)
+			else:
+				raise ValueError("The worker is not an instance of the Worker class")
 
-		@list_workers.deleter
-		def list_workers(self):
-				del self._var
 
 class Worker:
 		def __init__(self, id_: int, name: str, company: str, boss: Boss):
@@ -50,5 +54,16 @@ class Worker:
 			self.company = company
 			self.boss = boss
 
-boss1 = Boss(1, "Garry", "Best employment")
-worker1 = Worker
+boss1 = Boss(generate_id(), name="Javad", company="ABF")
+boss2 = Boss(generate_id(), name="Casper", company="Marcus inc.")
+
+worker1 = Worker(generate_id(), name="Martin", company="ABF", boss=boss1)
+worker2 = Worker(generate_id(), name="Eva", company="Marcus inc.", boss=boss2)
+
+boss1.list_workers = worker1
+boss2.list_workers = worker2
+
+# Виводимо інформацію про керівників та їх працівників
+print(f"Boss 1: {boss1.name}, Company: {boss1.company}\nWorkers of Boss 1:" + "\n".join([f"  {worker.name}" for worker in boss1.list_workers]))
+
+print(f"Boss 2: {boss2.name}, Company: {boss2.company}\nWorkers of Boss 2:" + "\n".join([f"  {worker.name}" for worker in boss2.list_workers]))
