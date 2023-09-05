@@ -7,7 +7,6 @@
 from unittest import TestCase, main
 from src.manager import create, update, delete
 
-
 class TestPhoneFunctions(TestCase):
 
     def test_create(self):
