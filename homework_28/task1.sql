@@ -18,8 +18,6 @@ SELECT employees.first_name, employees.last_name, employees.department_id, depar
 SELECT depart_name FROM departments;
 SELECT e1.first_name AS employee_name, COALESCE(e2.first_name, 'No manager') AS boss FROM employees e1 LEFT JOIN employees e2 ON e1.manager_id = e2.employee_id;
 SELECT employees.first_name, employees.last_name, jobs.job_title, (jobs.max_salary - employees.salary) AS dif_salary FROM employees JOIN jobs ON employees.job_id = jobs.job_id;
-
 SELECT jobs.job_title, AVG(employees.salary) AS avg_salary FROM employees JOIN jobs ON employees.job_id = jobs.job_id GROUP BY jobs.job_title;
-
 SELECT employees.first_name, employees.last_name, employees.salary FROM employees JOIN departments ON employees.department_id = departments.department_id JOIN locations ON departments.location_id = locations.location_id WHERE locations.city = 'London';
 SELECT departments.depart_name, COUNT(employees.employee_id) AS employee_count FROM departments JOIN employees ON departments.department_id = employees.department_id GROUP BY departments.depart_name;
