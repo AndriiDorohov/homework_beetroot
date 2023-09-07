@@ -10,31 +10,36 @@
 # which has to cover all the requirements to context managers mentioned
 # here:
 
-class File(object):
+#!/usr/bin/env python3
+
+class FileManager:
+    counter = 0
+
+    @classmethod
+    def get_num_of_usage(cls):
+        return cls.counter
+
     def __init__(self, file_name, method):
-        self.file_obj = open(file_name, method)
+        self.file_name = open(file_name, method)
+        print(f'Open file')
+
     def __enter__(self):
-        return self.file_obj
+        print(f'Entering context')
+        FileManager.counter += 1
+        return self
+
+    def write_log(self, text):
+        self.file_name.write(text)
+        print(f'Writing text')
+
     def __exit__(self, type, value, traceback):
-        print("Exception has been handled")
-        self.file_obj.close()
-        return True
+        print(f'Closing context, number of contexts is {FileManager.counter}')
+        self.file_name.close()
 
-with File('demo.txt', 'w') as opened_file:
-    opened_file.undefined_function()
+with FileManager("temp.txt", "w") as opened_file:
+    print('Call context manager instance method to get counter value:', FileManager.get_num_of_usage())
+    opened_file.write_log("Hi")
 
-
-# 'r'
-# open for reading (default)
-# 'w'
-# open for writing, truncating the file first
-# 'x'
-# open for exclusive creation, failing if the file already exists
-# 'a'
-# open for writing, appending to the end of file if it exists
-# 'b'
-# binary mode
-# 't'
-# text mode (default)
-# '+'
-# open for updating (reading and writing)
+with FileManager("temp.txt", "w") as opened_file:
+    print('Call context manager instance method to get counter value:', FileManager.get_num_of_usage())
+    opened_file.write_log("Hello")
