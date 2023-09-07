@@ -10,8 +10,6 @@
 # which has to cover all the requirements to context managers mentioned
 # here:
 
-#!/usr/bin/env python3
-
 class FileManager:
     counter = 0
 
