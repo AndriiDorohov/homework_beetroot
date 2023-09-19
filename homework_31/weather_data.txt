@@ -1,0 +1,12 @@
+City: Odessa
+Temperature: 23.3 °C
+Date and time: 2023-09-19 6:13
+
+City: Kharkiv
+Temperature: 25.0 °C
+Date and time: 2023-09-19 14:14
+
+City: London
+Temperature: 18.0 °C
+Date and time: 2023-09-19 12:14
+

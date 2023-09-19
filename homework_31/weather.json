@@ -1,0 +1,121 @@
+{
+    "location": {
+        "name": "Odessa",
+        "region": "Texas",
+        "country": "United States of America",
+        "lat": 31.85,
+        "lon": -102.37,
+        "tz_id": "America/Chicago",
+        "localtime_epoch": 1695122035,
+        "localtime": "2023-09-19 6:13"
+    },
+    "current": {
+        "last_updated_epoch": 1695121200,
+        "last_updated": "2023-09-19 06:00",
+        "temp_c": 23.3,
+        "temp_f": 73.9,
+        "is_day": 0,
+        "condition": {
+            "text": "Clear",
+            "icon": "//cdn.weatherapi.com/weather/64x64/night/113.png",
+            "code": 1000
+        },
+        "wind_mph": 11.9,
+        "wind_kph": 19.1,
+        "wind_degree": 200,
+        "wind_dir": "SSW",
+        "pressure_mb": 1015.0,
+        "pressure_in": 29.96,
+        "precip_mm": 0.0,
+        "precip_in": 0.0,
+        "humidity": 60,
+        "cloud": 0,
+        "feelslike_c": 25.2,
+        "feelslike_f": 77.4,
+        "vis_km": 10.0,
+        "vis_miles": 6.0,
+        "uv": 1.0,
+        "gust_mph": 20.8,
+        "gust_kph": 33.4
+    }
+}{
+    "location": {
+        "name": "Kharkiv",
+        "region": "Kharkivs'ka Oblast'",
+        "country": "Ukraine",
+        "lat": 50.0,
+        "lon": 36.25,
+        "tz_id": "Europe/Kiev",
+        "localtime_epoch": 1695122042,
+        "localtime": "2023-09-19 14:14"
+    },
+    "current": {
+        "last_updated_epoch": 1695121200,
+        "last_updated": "2023-09-19 14:00",
+        "temp_c": 25.0,
+        "temp_f": 77.1,
+        "is_day": 1,
+        "condition": {
+            "text": "Sunny",
+            "icon": "//cdn.weatherapi.com/weather/64x64/day/113.png",
+            "code": 1000
+        },
+        "wind_mph": 5.6,
+        "wind_kph": 9.0,
+        "wind_degree": 193,
+        "wind_dir": "SSW",
+        "pressure_mb": 1020.0,
+        "pressure_in": 30.13,
+        "precip_mm": 0.0,
+        "precip_in": 0.0,
+        "humidity": 26,
+        "cloud": 9,
+        "feelslike_c": 24.4,
+        "feelslike_f": 76.0,
+        "vis_km": 10.0,
+        "vis_miles": 6.0,
+        "uv": 7.0,
+        "gust_mph": 6.4,
+        "gust_kph": 10.4
+    }
+}{
+    "location": {
+        "name": "London",
+        "region": "City of London, Greater London",
+        "country": "United Kingdom",
+        "lat": 51.52,
+        "lon": -0.11,
+        "tz_id": "Europe/London",
+        "localtime_epoch": 1695122061,
+        "localtime": "2023-09-19 12:14"
+    },
+    "current": {
+        "last_updated_epoch": 1695121200,
+        "last_updated": "2023-09-19 12:00",
+        "temp_c": 18.0,
+        "temp_f": 64.4,
+        "is_day": 1,
+        "condition": {
+            "text": "Overcast",
+            "icon": "//cdn.weatherapi.com/weather/64x64/day/122.png",
+            "code": 1009
+        },
+        "wind_mph": 23.0,
+        "wind_kph": 37.1,
+        "wind_degree": 230,
+        "wind_dir": "SW",
+        "pressure_mb": 1005.0,
+        "pressure_in": 29.68,
+        "precip_mm": 0.0,
+        "precip_in": 0.0,
+        "humidity": 73,
+        "cloud": 100,
+        "feelslike_c": 18.0,
+        "feelslike_f": 64.4,
+        "vis_km": 10.0,
+        "vis_miles": 6.0,
+        "uv": 4.0,
+        "gust_mph": 25.1,
+        "gust_kph": 40.4
+    }
+}
