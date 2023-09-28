@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+{% load static %}
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <title>Index</title>
+    <link rel="stylesheet" href="{% static 'first.css'}"/>
 </head>
 
 <body>
@@ -12,7 +14,7 @@
         {% if latest_question_list %}
         <ul>
             {% for question in latest_question_list %}
-            <li>{{ question }}</li>
+            <li>{{ question|upper }}</li>
             {% endfor %}
         </ul>
         {% else %}
