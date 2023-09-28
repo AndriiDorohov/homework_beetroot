@@ -6,5 +6,5 @@ classroom
 .ipynb_checkpoints
 __pycache__
 work_dir
-django
 .mypy_cache
+kulichevskiy
