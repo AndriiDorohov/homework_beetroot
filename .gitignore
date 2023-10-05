@@ -8,3 +8,5 @@ __pycache__
 work_dir
 .mypy_cache
 kulichevskiy
+site_template
+django

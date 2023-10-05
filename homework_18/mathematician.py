@@ -16,15 +16,17 @@
 # assert m.remove_positives([26, -11, -8, 13, -90]) == [-11, -8, -90]
 # assert m.filter_leaps([2001, 1884, 1995, 2003, 2020]) == [1884, 2020]
 
+
 class Mathematician:
-		def square_nums(self, arr: list) -> list:
-			return [(x * x) for x in arr]
+    def square_nums(self, arr: list) -> list:
+        return [(x * x) for x in arr]
 
-		def remove_positives(self, arr: list) -> list:
-			return [x for x in arr if x < 0]
+    def remove_positives(self, arr: list) -> list:
+        return [x for x in arr if x < 0]
 
-		def filter_leaps(self, arr: list) -> list:
-				return [min(arr), max(arr)]
+    def filter_leaps(self, arr: list) -> list:
+        return [min(arr), max(arr)]
+
 
 m = Mathematician()
 assert m.square_nums([7, 11, 5, 4]) == [49, 121, 25, 16]

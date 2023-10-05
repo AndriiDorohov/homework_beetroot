@@ -20,4 +20,10 @@ from .views import *
 urlpatterns = [
     path("index/", index),
     path("quest/", polls),
+    path("get/", get_request),
+    path("get/<int:job_id>", get_object),
+    path("post/", post_request),
+    path("put/<int:job_id>", put_request),
+    path("delete/<int:job_id>", delete_request),
+    path("employee/create/", create_employee),
 ]

@@ -14,3 +14,13 @@
 # Create pytest fixture, which uses your implementation of
 # the context manager to return a file object, which could
 # be used inside your function.
+
+
+def process_text_data(file_obj):
+    data = file_obj.read()
+    uppercase_data = data.upper()
+    print(uppercase_data)
+
+
+with open("example.txt", "r") as file:
+    process_text_data(file)
