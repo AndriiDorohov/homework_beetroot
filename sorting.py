@@ -11,6 +11,7 @@ from time import perf_counter
 # The Merge sort
 # The Quick sort
 
+
 def measure_performance(func):
     """Measure performance of a function"""
 
@@ -21,11 +22,13 @@ def measure_performance(func):
         func(*args, **kwargs)
         current, peak = tracemalloc.get_traced_memory()
         finish_time = perf_counter()
-        print(f'Function: {func.__name__}')
-        print(f'Method: {func.__doc__}')
-        print(f'Memory usage:\t\t {current / 10 ** 6:.6f} MB \n'
-              f'Peak memory usage:\t {peak / 10 ** 6:.6f} MB ')
-        print(f'Time elapsed is seconds: {finish_time - start_time:.6f}')
+        print(f"Function: {func.__name__}")
+        print(f"Method: {func.__doc__}")
+        print(
+            f"Memory usage:\t\t {current / 10 ** 6:.6f} MB \n"
+            f"Peak memory usage:\t {peak / 10 ** 6:.6f} MB "
+        )
+        print(f"Time elapsed is seconds: {finish_time - start_time:.6f}")
         print(args[0])
         print(f'{"-" * 40}')
         tracemalloc.stop()
@@ -86,7 +89,7 @@ def gap_insertion_sort(array, start, gap):
         array[position] = current_value
 
 
-@measure_performance
+@measure_mance
 def merge_sort(array):
     if len(array) > 1:
         mid = len(array) // 2
@@ -140,7 +143,6 @@ def partition(array, first, last):
 
     done = False
     while not done:
-
         while left_mark <= right_mark and array[left_mark] <= pivot_value:
             left_mark = left_mark + 1
 
@@ -164,6 +166,14 @@ def my_sort(array):
 
 if __name__ == "__main__":
     test_list = [random.randint(1, 100) for _ in range(23)]
-    for func in (bubble_sort, selection_sort, insertion_sort, shell_sort, merge_sort, quick_sort, my_sort):
+    for func in (
+        bubble_sort,
+        selection_sort,
+        insertion_sort,
+        shell_sort,
+        merge_sort,
+        quick_sort,
+        my_sort,
+    ):
         copy_test_list = test_list[:]
         func(copy_test_list)
