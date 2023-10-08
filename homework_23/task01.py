@@ -8,7 +8,6 @@
 
 # Середній рівень:
 
-# Реалізувати in (__contains__) та len (__len__) методи для HashTable
 
 from bisect import bisect_left
 import timeit
