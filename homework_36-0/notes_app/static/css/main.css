@@ -1,0 +1,58 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.site-description {
+	text-align: center;
+}
+
+.notes-list {
+	margin: 50px;
+	display: flex;
+}
+
+.note-ul {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	margin: 20px 10px;
+}
+
+.note-ul li {
+	width: calc(30% - 15px);
+	height: 250px;
+	list-style: none;
+	background-color: #e3f4fa;
+	border-radius: 25px;
+	padding: 15px 20px 20px;
+	border: 1px solid #333;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: 10px 15px 10px 10px;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.note-item p {
+	font-size: 22px;
+	font-weight: 500;
+}
+
+.note-date {
+	display: block;
+	margin-top: 5px;
+	color: gray;
+	font-size: 16px;
+}
+
+.note-content .note-date {
+	color: gray;
+	font-size: 14px;
+	padding-top: 10px;
+	border-top: 1px solid tomato;
+}
