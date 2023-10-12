@@ -6,24 +6,23 @@
     <meta charset="UTF-8">
     <title class="site-title">Planner week</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
     <h1 class="site-description">My notes</h1>
-    <div class="notes-list">
-        <ul class="note-ul">
-            {% for note in notes %}
-            <li class="note-item">
-                <div class="note-content">
-                    <h2 class="note-title">{{ note.title }}</h2>
-                    <p class="note-text">{{ note.text }}</p>
-                    <p class="note-date">Date: {{ note.reminder }}</p>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+    <ul class="note-ul">
+        {% for note in notes %}
+        <li class="note-item">
+            <div class="note-content">
+                <h2 class="note-title">{{ note.title }}</h2>
+                <p class="note-text">{{ note.text }}</p>
+                <p class="note-date">Date: {{ note.reminder }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 </body>
 
 </html>
