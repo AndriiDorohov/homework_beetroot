@@ -1,3 +1,8 @@
+:root {
+    --default-bg-color: #e3f4fa;
+    --hover-bg-color: yellow;
+}
+
 * {
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
         "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -18,13 +23,18 @@
 	width: calc(20%);
 	height: 20vw;
     list-style: none;
-    background-color: #e3f4fa;
+    background-color: var(--default-bg-color);
     border-radius: 25px;
     padding: 15px 20px 20px;
     border: 1px solid #333;
     margin: 1vw;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     overflow: hidden;
+    transition: background-color 1s;
+}
+
+.note-item:hover {
+    background-color: var(--hover-bg-color);
 }
 
 .note-title {
