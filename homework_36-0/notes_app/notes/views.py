@@ -13,4 +13,4 @@ def index(request):
 
 def homepage(request):
     notes = Note.objects.all()
-    return render(request, "index.html", {"notes": notes})
+    return render(request, "homepage.html", {"notes": notes})

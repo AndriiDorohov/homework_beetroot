@@ -1,59 +1,54 @@
 :root {
-    --default-bg-color: #e3f4fa;
-    --hover-bg-color: yellow;
+	--default-bg-color: #1a1a1a; /* Темний фон */
+	--hover-bg-color: #876d01; /* Колір при наведенні */
+	--text-color-dark: #ffffff;
+	--text-color: #ffffff; /* Колір тексту */
+	--shadow-color: #000000; /* Колір тіні */
 }
 
 * {
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	color: var(--text-color); /* Змінюємо колір тексту на білий */
+}
+
+body {
+	background-color: var(
+		--default-bg-color
+	); /* Змінюємо фоновий колір сторінки */
 }
 
 .site-description {
-    text-align: center;
-    font-size: 3.8vw;
+	text-align: center;
+	font-size: 3.8vw;
+	color: var(--text-color); /* Змінюємо колір тексту */
 }
 
 .note-ul {
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 0;
+	display: flex;
+	flex-wrap: wrap;
+	padding-left: 0;
 }
 
 .note-item {
 	width: calc(20%);
 	height: 20vw;
-    list-style: none;
-    background-color: var(--default-bg-color);
-    border-radius: 25px;
-    padding: 15px 20px 20px;
-    border: 1px solid #333;
-    margin: 1vw;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-    transition: background-color 1s;
+	list-style: none;
+	background-color: var(--default-bg-color);
+	border-radius: 25px;
+	padding: 15px 20px 20px;
+	border: 1px solid var(--shadow-color); /* Змінюємо колір рамки */
+	margin: 1vw;
+	box-shadow: 5px 5px 10px var(--shadow-color); /* Змінюємо колір тіні */
+	overflow: hidden;
+	transition: background-color 2s;
 }
 
 .note-item:hover {
-    background-color: var(--hover-bg-color);
+	background-color: var(--hover-bg-color);
 }
 
-.note-title {
-    font-size: 2vw;
-    font-weight: 900;
-}
-
-.note-date {
-    margin-top: 5px;
-    color: gray;
-}
-
-.note-text {
-    font-size: 1.5vw;
-}
-
-.note-date {
-    color: gray;
-    font-size: 1vw;
-    padding-top: 10px;
-    border-top: 1px solid tomato;
+.note-item:hover h2,
+.note-item:hover p {
+	color: var(--text-color-dark);
 }
