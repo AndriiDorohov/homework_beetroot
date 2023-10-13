@@ -1,27 +1,27 @@
 :root {
-	--default-bg-color: #1a1a1a; /* Темний фон */
-	--hover-bg-color: #876d01; /* Колір при наведенні */
+	--default-bg-color: #1a1a1a;
+	--hover-bg-color: #876d01;
 	--text-color-dark: #ffffff;
-	--text-color: #ffffff; /* Колір тексту */
-	--shadow-color: #000000; /* Колір тіні */
+	--text-color: #ffffff;
+	--shadow-color: #000000;
 }
 
 * {
 	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
 		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-	color: var(--text-color); /* Змінюємо колір тексту на білий */
+	color: var(--text-color);
 }
 
 body {
 	background-color: var(
 		--default-bg-color
-	); /* Змінюємо фоновий колір сторінки */
+	);
 }
 
 .site-description {
 	text-align: center;
 	font-size: 3.8vw;
-	color: var(--text-color); /* Змінюємо колір тексту */
+	color: var(--text-color);
 }
 
 .note-ul {
@@ -37,9 +37,9 @@ body {
 	background-color: var(--default-bg-color);
 	border-radius: 25px;
 	padding: 15px 20px 20px;
-	border: 1px solid var(--shadow-color); /* Змінюємо колір рамки */
+	border: 1px solid var(--shadow-color);
 	margin: 1vw;
-	box-shadow: 5px 5px 10px var(--shadow-color); /* Змінюємо колір тіні */
+	box-shadow: 5px 5px 10px var(--shadow-color);
 	overflow: hidden;
 	transition: background-color 2s;
 }

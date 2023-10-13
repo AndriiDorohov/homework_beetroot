@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title class="site-title">Planner week</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div class="popup-box">
+        <div class="popup">
+            <div class="content">
+                <header>
+                    <p></p>
+                    <i class="uil uil-times"></i>
+                </header>
+                <form action="#">
+                    <div class="row title">
+                        <label>Title</label>
+                        <input type="text" spellcheck="false">
+                    </div>
+                    <div class="row description">
+                        <label>Description</label>
+                        <textarea spellcheck="false"></textarea>
+                    </div>
+                    <button></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <h1 class="site-description">My notes</h1>
+    <ul class="note-ul">
+        {% for note in notes %}
+        <li class="note-item">
+            <div class="note-content">
+                <h2 class="note-title">{{ note.title }}</h2>
+                <p class="note-text">{{ note.text }}</p>
+                <p class="note-date">Date: {{ note.reminder }}</p>
+            </div>
+        </li>
+        {% endfor %}
+        <li class="note-last">
+            <div class="hoverable-img"></div>
+        </li>
+    </ul>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
