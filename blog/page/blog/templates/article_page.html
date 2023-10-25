@@ -1,0 +1,132 @@
+{% extends 'base.html' %} {% load static %} {% load i18n %} {% block title %}{{
+author_name }}: {{ article.title | safe }} {% endblock %} {% block opengraph %}
+<meta property="og:title" content="{{ article.title | safe }}" />
+<meta
+	property="og:image"
+	content="https://{{ request.get_host }}{{ article.og_image.url}}"
+/>
+<meta
+	property="twitter:image"
+	content="https://{{ request.get_host }}{{ article.og_image.url}}"
+/>
+<link
+	rel="image_src"
+	href="https://{{ request.get_host }}{{ article.og_image.url}}"
+/>
+<meta property="og:image:width" content="600" />
+<meta property="og:image:height" content="315" />
+<meta property="og:type" content="blog" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:author" content="{{ author_name }}" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/like.js' %}"></script>
+
+{% endblock %} {% block content %}
+<div id="article-container" class="article-list">
+	<div class="article">
+		<h1 class="article-title">{{ article.title | safe }}</h1>
+		<img
+			class="gallery"
+			src="{{ article.og_image.url }}"
+			alt="Photo"
+			width="50%"
+			data-source="{{ article.og_image.url }}"
+		/>
+
+		<div class="article-text">{{ article.full_text | safe }}</div>
+
+		<div class="article-footer">
+			<div class="likely-wrapper">
+				<div class="like-unlike">
+					<!-- ----------------------------------------Like up -->
+					{% if user.is_authenticated %}
+					<form action="{% url 'article_like' article.id %}" method="POST">
+						{% csrf_token %} {% if article_is_liked %}
+						<button
+							type="submit"
+							name="article_id"
+							value="{{ article.id }}"
+							class="btn-no-background"
+						>
+							<img src="{% static 'img/dislike.svg' %}" class="icon" />
+						</button>
+						{% else %}
+						<button
+							type="submit"
+							name="article_id"
+							value="{{ article.id }}"
+							class="btn-no-background"
+						>
+							<img src="{% static 'img/like.svg' %}" class="icon" />
+						</button>
+						{% endif %}
+					</form>
+
+					{% else %}
+					<a
+						class="btn btn-outline-info"
+						href="{% url 'login' %}?next={{request.path}}"
+						>Log in to like this article!</a
+					><br />
+					{% endif %}
+					<strong class="text-secondary"
+						>{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong
+					>
+					<!-- ----------------------------------------Like down -->
+				</div>
+
+				<div class="likely">
+					<div class="twitter">{% translate "Tweeter" %}</div>
+					<div class="facebook">{% translate "Share" %}</div>
+					<div class="telegram">{% translate "Sent" %}</div>
+					<div class="whatsapp">{% translate "WhatsApp" %}</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			📁<a href="{{ article.get_category_url }}">{{ article.category }}</a>
+
+			<h3>👤{{ article.author }}</h3>
+		</div>
+	</div>
+
+	<div class="comment-section">
+		<h3 class="section-title">{% translate "Comments" %}</h3>
+		<ul class="comment-list">
+			{% for comment in comments %}
+			<li class="comment-item">
+				<span class="comment-username">{{ comment.user.username }}:</span>
+				<span class="comment-text">{{ comment.text }}</span>
+			</li>
+			{% empty %}
+			<li class="no-comments-message">{% translate "No comments yet." %}</li>
+			{% endfor %}
+		</ul>
+
+		<h3 class="section-title">{% translate "Add a Comment" %}</h3>
+		<div class="container-creat">
+			<form method="post" action="{% url 'add_comment' article.id %}">
+				{% csrf_token %} {{ comment_form.text }}
+				<button type="submit" class="add-comment-button">
+					{% translate "Add Comment" %}
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="lightbox js-lightbox">
+	<div class="lightbox-overlay"></div>
+
+	<div class="lightbox-content">
+		<img class="lightbox-image" src="" alt="" />
+	</div>
+
+	<button
+		type="button"
+		class="lightbox-button"
+		data-action="close-lightbox"
+	></button>
+</div>
+<script src="{% static 'js/modal.js' %}" type="module"></script>
+{% endblock %}
