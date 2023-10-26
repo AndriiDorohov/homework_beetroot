@@ -29,6 +29,7 @@ global_context = {
 
 def home_page(request):
     articles = Article.objects.all().order_by("-pubdate")
+    context = global_context | {"articles": articles}
     page_number = request.GET.get("page", 1)
     paginated = Paginator(articles, 2)
     try:
@@ -38,15 +39,17 @@ def home_page(request):
     except EmptyPage:
         page = paginated.page(paginated.num_pages)
 
-    return render(request, "home_page.html", {"page": page})
+    return render(request, "home_page.html", {"page": page, **context})
 
 
 def about_page(request):
-    return render(request, "about_page.html")
+    context = global_context
+    return render(request, "about_page.html", context)
 
 
 def contact_page(request):
-    return render(request, "contact_page.html")
+    context = global_context
+    return render(request, "contact_page.html", context)
 
 
 def article_page(request, slug):

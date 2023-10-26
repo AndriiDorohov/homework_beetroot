@@ -1,11 +1,12 @@
-{% extends 'base.html' %}
-{% load static %}
-
+{% extends 'base.html' %} {% load static %} {% load i18n %}
+<!-- ------------------------------------------------------------------------------------- -->
+{% block title %}{{ author_name }}: {{ article.title | safe }} {% endblock %}
+<!-- ------------------------------------------------------------------------------------- -->
 {% block content %}
     <div class="row">
         <div class="col-lg-8 col-md-12">
             <div class="article-list">
-                <h1>Категория: {{ category }}</h1>
+                <h1>Category: {{ category }}</h1>
                 {% for article in articles %}
                     <div class="article">
                         <h2 class="article-title">

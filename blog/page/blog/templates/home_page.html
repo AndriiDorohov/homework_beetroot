@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load static %}{% block content %}
 <div class="article-list">
   {% if user.is_authenticated %}
   <a href="{% url 'create_article' %}" class="button-create-form"

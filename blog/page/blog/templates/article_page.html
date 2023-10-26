@@ -1,5 +1,9 @@
-{% extends 'base.html' %} {% load static %} {% load i18n %} {% block title %}{{
-author_name }}: {{ article.title | safe }} {% endblock %} {% block opengraph %}
+{% extends 'base.html' %} {% load static %} {% load i18n %}
+<!-- ------------------------------------------------------------------------------------- -->
+{% block title %}{{ author_name }}: {{ article.title | safe }} {% endblock %}
+<!-- ------------------------------------------------------------------------------------- -->
+{% block opengraph %}
+
 <meta property="og:title" content="{{ article.title | safe }}" />
 <meta
 	property="og:image"
@@ -21,7 +25,9 @@ author_name }}: {{ article.title | safe }} {% endblock %} {% block opengraph %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/like.js' %}"></script>
 
-{% endblock %} {% block content %}
+{% endblock %}
+<!-- ------------------------------------------------------------------------------------- -->
+{% block content %}
 <div id="article-container" class="article-list">
 	<div class="article">
 		<h1 class="article-title">{{ article.title | safe }}</h1>
