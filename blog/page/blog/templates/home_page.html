@@ -1,32 +1,39 @@
 {% extends 'base.html' %} {% load static %}{% block content %}
-<div class="article-list">
-  {% if user.is_authenticated %}
-  <a href="{% url 'create_article' %}" class="button-create-form"
-    ><img src="{% static 'img/create-article.svg' %}" class="icon-create"
-  /></a>
-  {% endif %} {% for article in page %}
-  <div class="article">
-    <h1 class="article-title">
-      <a href="{{ article.get_absolute_url }}">{{ article.title | safe }}</a>
-    </h1>
-    <div class="article-cover">
-      <a href="{{ article.get_absolute_url }}">
-        <img src="{{ article.og_image.url }}" alt="Photo" width="100%" />
-      </a>
-      <div class="article-img-text">
-        <p class="article-text">{{ article.summary | safe }}</p>
-      </div>
-    </div>
-    <div class="article-footer">
-      <div class="article-footer-items">
-        📁<a href="{{ article.get_category_url }}">{{ article.category }}</a>
-      </div>
-      <div class="article-footer-items">
-        <h3>👤{{ article.author }}</h3>
-      </div>
-    </div>
-  </div>
-  {% endfor %} {% include "pagination.html" %}
-</div>
+{% include 'partials/hero_post.html' %}
+<div class="page-container">
 
-{% endblock %}
+    {% if user.is_authenticated %}
+    <a href="{% url 'create_article' %}" class="button-create-form"><img src="{% static 'img/create-article.svg' %}"
+            class="icon-create" /></a>
+    {% endif %}
+
+    <h2 class="latest-post-title">Latest Post</h2>
+        <div class="article-container">
+        {% for article in page %}
+        <div class="article-wrapper">
+            <div class="article-cover">
+                <a href="{{ article.get_absolute_url }}">
+                    <img src="{{ article.og_image.url }}" alt="Photo" width="100%" />
+                </a>
+            </div>
+            <div class="article-details">
+                <div class="article-category">
+                    <a href="{{ article.get_category_url }}">{{ article.category }}</a>
+                </div>
+                <h2 class="article-title">
+                    <a href="{{ article.get_absolute_url }}">{{ article.title | safe }}</a>
+                </h2>
+                <div class="article-footer">
+                    <div class="article-footer-items">
+                        <a class="article-footer-author" href="{{ article.get_author_url }}">👤{{ article.author }}</a>
+                        <p>{{ article.pubdate|date:"F j, Y" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if show_pagination %} {% else %} {% include "pagination.html" %} {% endif %}
+</div>
+{% endblock content %}
+</div>

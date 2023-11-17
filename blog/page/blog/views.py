@@ -14,13 +14,23 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import User
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.views.generic import DetailView
 
 from bs4 import BeautifulSoup
+
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from .models import SubscribedUsers
+from django.core.mail import EmailMessage, send_mail
+from .forms import NewsletterForm
+from .models import SubscribedUsers
+from .decorators import user_is_superuser
+
 
 global_context = {
     "author_name": _("Andrii Dorokhov"),
@@ -31,7 +41,8 @@ def home_page(request):
     articles = Article.objects.all().order_by("-pubdate")
     context = global_context | {"articles": articles}
     page_number = request.GET.get("page", 1)
-    paginated = Paginator(articles, 2)
+    items_per_page = 5
+    paginated = Paginator(articles, items_per_page)
     try:
         page = paginated.page(page_number)
     except PageNotAnInteger:
@@ -39,12 +50,34 @@ def home_page(request):
     except EmptyPage:
         page = paginated.page(paginated.num_pages)
 
-    return render(request, "home_page.html", {"page": page, **context})
+    specific_article = Article.objects.first()
+
+    show_pagination = paginated.num_pages == 1
+    return render(
+        request,
+        "home_page.html",
+        {
+            "page": page,
+            "specific_article": specific_article,
+            **context,
+            "show_pagination": show_pagination,
+        },
+    )
 
 
-def about_page(request):
+def blog_page(request):
     context = global_context
-    return render(request, "about_page.html", context)
+    return render(request, "blog_page.html", context)
+
+
+def single_post_page(request):
+    context = global_context
+    return render(request, "single_post_page.html", context)
+
+
+def pages_page(request):
+    context = global_context
+    return render(request, "pages_page.html", context)
 
 
 def contact_page(request):
@@ -75,6 +108,10 @@ def category_page(request, category):
     context = global_context | {"articles": articles, "category": category}
     return render(request, "category_page.html", context)
 
+def author_page(request, author_name):
+    articles = Article.objects.filter(author_name=author_name)
+    context = global_context | {"articles": articles, "author": author_name}
+    return render(request, "author_page.html", context)
 
 def create_article(request):
     if request.method == "POST":
@@ -130,7 +167,7 @@ def registration(request):
             return redirect("home_page")
     else:
         form = RegistrationForm()
-    return render(request, "registration.html", {"form": form})
+    return render(request, "./partials/registration.html", {"form": form})
 
 
 def user_login(request):
@@ -145,7 +182,7 @@ def user_login(request):
                 return redirect("home_page")
     else:
         form = LoginForm()
-    return render(request, "login.html", {"form": form})
+    return render(request, "./partials/login.html", {"form": form})
 
 
 def article_search(request):
@@ -160,6 +197,69 @@ def article_search(request):
     }
 
     return render(request, "search_results.html", context)
+
+
+def subscribe(request):
+    if request.method == "POST":
+        name = request.POST.get("name", None)
+        email = request.POST.get("email", None)
+
+        if not name or not email:
+            messages.error(
+                request,
+                "You must type legit name and email to subscribe to a Newsletter",
+            )
+            return redirect("/")
+
+        if User.objects.filter(email=email).exists():
+            messages.error(
+                request,
+                f"Found registered user with associated {email} email. You must login to subscribe or unsubscribe.",
+            )
+            return redirect(request.META.get("HTTP_REFERER", "/"))
+
+        subscribe_user = SubscribedUsers.objects.filter(email=email).first()
+        if subscribe_user:
+            messages.error(request, f"{email} email address is already subscriber.")
+            return redirect(request.META.get("HTTP_REFERER", "/"))
+
+        try:
+            validate_email(email)
+        except ValidationError as e:
+            messages.error(request, e.messages[0])
+            return redirect("/")
+
+        subscribe_model_instance = SubscribedUsers()
+        subscribe_model_instance.name = name
+        subscribe_model_instance.email = email
+        subscribe_model_instance.save()
+        messages.success(
+            request, f"{email} email was successfully subscribed to our newsletter!"
+        )
+        return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@user_is_superuser
+def newsletter(request):
+    if request.method == "POST":
+        subscribers = SubscribedUsers.objects.all()
+
+        subject = request.POST.get("subject")
+        email_message = request.POST.get("message")
+
+        for subscriber in subscribers:
+            send_mail(
+                subject,
+                email_message,
+                "your@email.com",
+                [subscriber.email],
+                fail_silently=False,
+            )
+
+        messages.success(request, f"Email sent to all subscribers")
+        return redirect("/")
+
+    return render(request, "newsletter.html")
 
 
 class ArticleDetailView(DetailView):

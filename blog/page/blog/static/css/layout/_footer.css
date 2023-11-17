@@ -1,0 +1,270 @@
+/* ---------------------------FOOTER---------------------- */
+
+.footer-distributed {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	background-color: rgb(246, 246, 247);
+}
+.footer-wrapper {
+	display: flex;
+	position: relative;
+	margin: 0 auto;
+	width: 1216px;
+	flex-direction: column;
+	padding-top: 64px;
+}
+
+.footer-section-1 {
+	display: flex;
+	margin-bottom: 64px;
+}
+
+.footer-section-2 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-top: 32px;
+	padding-bottom: 32px;
+}
+
+.footer-left {
+	width: 289px;
+	margin-right: 20px;
+}
+
+.footer-company-about {
+	font-size: 18px;
+	font-family: "PlusJakartaSans-SemiBold", sans-serif;
+	font-weight: 600;
+	font-style: normal;
+	margin-top: 0;
+	margin-bottom: 12px;
+}
+
+.footer-company-text {
+	font-size: 16px;
+	font-family: "PlusJakartaSans-Regular", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	line-height: 1.6;
+	margin-top: 0;
+	margin-bottom: 24px;
+}
+
+.footer-email,
+.footer-phone {
+	font-size: 16px;
+	font-family: "PlusJakartaSans-Regular", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	line-height: 2;
+	margin: 0;
+}
+
+.footer-company-text span,
+.footer-email span,
+.footer-phone span {
+	font-family: "PlusJakartaSans-SemiBold", sans-serif;
+	font-weight: 600;
+	font-style: normal;
+}
+
+.footer-email a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.footer-center {
+	display: flex;
+	justify-content: center;
+	width: 495px;
+	margin-right: 20px;
+}
+
+.link-list {
+	display: flex;
+	flex-direction: column;
+	margin-right: 80px;
+}
+
+.category-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.footer-links {
+	font-size: 18px;
+	font-family: "PlusJakartaSans-SemiBold", sans-serif;
+	font-weight: 600;
+	font-style: normal;
+}
+
+.link-list a {
+	line-height: 2;
+	text-decoration: none;
+	color: inherit;
+	font-size: 16px;
+	font-family: "PlusJakartaSans-Regular", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.link-list ul {
+	list-style: none;
+	padding: 0;
+}
+
+.category-list a {
+	line-height: 2;
+	text-decoration: none;
+	color: inherit;
+	font-size: 16px;
+	font-family: "PlusJakartaSans-Regular", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.category-list ul {
+	list-style: none;
+	padding: 0;
+}
+
+.footer-right {
+	display: flex;
+	width: 392px;
+}
+
+.subscribe-section {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 392px;
+	height: 254px;
+	border-radius: 12px;
+	background-color: rgb(255, 255, 255);
+}
+
+.subscribe-submit {
+	background-color: rgb(75, 107, 251);
+	width: 320px;
+	height: 48px;
+	color: rgb(255, 255, 255);
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 16px;
+	font-family: "WorkSans-Regular", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.subscribe-message {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.subscribe-text {
+	font-size: 20px;
+	font-family: "WorkSans-SemiBold", sans-serif;
+	font-weight: 600;
+	font-style: normal;
+	margin: 0;
+}
+
+.subscribe-text-info {
+	color: rgb(105, 106, 117);
+	font-size: 16px;
+	font-family: "WorkSans-Regular", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.name-input,
+.email-input {
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	box-sizing: border-box;
+	color: rgb(151, 152, 159);
+	font-size: 16px;
+	font-family: "WorkSans-Regular", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.logo-section {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.logo-section img {
+	width: 48px;
+	height: 48px;
+	padding-right: 10px;
+}
+
+.footer-company-name {
+	font-size: 20px;
+	font-family: "PlusJakartaSans-Regular", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	line-height: 1.6;
+	margin: 0;
+}
+
+.footer-company-name span {
+	font-family: "PlusJakartaSans-ExtraBold", sans-serif;
+	font-weight: 800;
+}
+
+.footer-rights {
+	font-size: 16px;
+	font-family: "PlusJakartaSans-Regular", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	margin: 0;
+}
+
+.footer-links {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.footer-links a {
+	text-decoration: none;
+	color: inherit;
+	font-size: 16px;
+	font-family: "PlusJakartaSans-Regular", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	margin-right: 16px;
+	margin-left: 16px;
+}
+
+.footer-links a:first-child {
+	margin-left: 0;
+}
+
+.footer-links a:last-child {
+	margin-right: 0;
+}
+
+.footer-links p {
+	color: rgb(232, 232, 234);
+}
+
+.separator {
+	border: none;
+	border-top: 1px solid rgb(232, 232, 234); /* Стиль та колір лінії */
+	display: block;
+	width: 100%; /* Ширина лінії на всю ширину секції */
+	margin: 0;
+}

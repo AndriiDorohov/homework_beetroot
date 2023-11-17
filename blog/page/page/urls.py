@@ -30,8 +30,11 @@ from blog.views import (
     registration,
     user_login,
     article_search,
-    about_page,
+    blog_page,
+    single_post_page,
+    pages_page,
     contact_page,
+    author_page,
 )
 
 urlpatterns = [
@@ -39,6 +42,7 @@ urlpatterns = [
     path("", home_page, name="home_page"),
     path("blog/<slug:slug>/", article_page, name="article_page"),
     path("blog/category/<slug:category>/", category_page, name="category_page"),
+    path("blog/author/<slug:author_name>/", author_page, name="author_page"),
     path("create/", create_article, name="create_article"),
     path("article/<int:article_id>/add_comment/", add_comment, name="add_comment"),
     path("article-like/<int:article_id>/", views.article_like, name="article_like"),
@@ -46,8 +50,12 @@ urlpatterns = [
     path("login/", user_login, name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("search/", article_search, name="article_search"),
-    path("about/", about_page, name="about_page"),
+    path("blog/", blog_page, name="blog_page"),
+    path("single_post/", single_post_page, name="single_post_page"),
+    path("pages/", pages_page, name="pages_page"),
     path("contact/", contact_page, name="contact_page"),
+    path("subscribe", views.subscribe, name="subscribe"),
+    path("newsletter", views.newsletter, name="newsletter"),
 ]
 
 if settings.DEBUG:

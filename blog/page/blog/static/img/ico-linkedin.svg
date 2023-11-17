@@ -1,18 +1,1 @@
-<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_602_566)">
-<rect x="15" y="61" width="50" height="50" rx="10" transform="rotate(-90 15 61)" fill="#1E1E1E"/>
-<path d="M32.5462 49.751L26.7151 49.751L26.7151 30.9729L32.5462 30.9729L32.5462 49.751ZM29.6271 28.4114C27.7628 28.4114 26.25 26.8665 26.25 25.0021C26.25 24.1065 26.6058 23.2475 27.2391 22.6141C27.8725 21.9808 28.7315 21.625 29.6271 21.625C30.5228 21.625 31.3818 21.9808 32.0151 22.6141C32.6485 23.2475 33.0043 24.1065 33.0043 25.0021C33.0043 26.8665 31.4915 28.4114 29.6271 28.4114ZM54.37 49.751L48.5519 49.751L48.5519 40.6101C48.5519 38.4313 48.5077 35.6378 45.5203 35.6378C42.4888 35.6378 42.0237 38.0044 42.0237 40.4534L42.0237 49.751L36.1986 49.751L36.1986 30.9729L41.7906 30.9729L41.7906 33.5344H41.872C42.6505 32.0587 44.552 30.5018 47.3887 30.5018C53.2901 30.5018 54.375 34.3882 54.375 39.4358L54.375 49.751H54.37Z" fill="white"/>
-</g>
-<defs>
-<filter id="filter0_d_602_566" x="0" y="0" width="80" height="80" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="7.5"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.0862745 0 0 0 0 0.0901961 0 0 0 0 0.0980392 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_602_566"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_602_566" result="shape"/>
-</filter>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>

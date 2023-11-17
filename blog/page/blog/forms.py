@@ -3,6 +3,7 @@ from .models import Article
 from django.forms import ModelForm, TextInput, Textarea, Select, FileInput
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from tinymce.widgets import TinyMCE
 
 
 class ArticleForm(ModelForm):
@@ -51,3 +52,9 @@ class ArticleSearchForm(forms.Form):
         max_length=100,
         widget=forms.TextInput(attrs={"placeholder": "Search for articles..."}),
     )
+
+
+class NewsletterForm(forms.Form):
+    subject = forms.CharField()
+    receivers = forms.CharField()
+    message = forms.CharField(widget=TinyMCE(), label="Email content")

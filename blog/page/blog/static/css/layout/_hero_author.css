@@ -1,0 +1,9 @@
+.hero-author {
+	display: flex;
+	width: 1216px;
+	height: 344px;
+	background-color: rgb(245, 245, 247);
+	margin: auto;
+	border-radius: 12px;
+	margin-bottom: 48px;
+}

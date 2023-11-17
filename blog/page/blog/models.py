@@ -16,6 +16,7 @@ def image_filename(instance, filename):
 class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     # author = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1)
+    author_name = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     summary = models.TextField()
     full_text = models.TextField()
@@ -35,6 +36,9 @@ class Article(models.Model):
     def get_category_url(self):
         return reverse("category_page", kwargs={"category": self.category})
 
+    def get_author_url(self):
+        return reverse("author_page", kwargs={"author_name": self.author_name})
+
     def save(self, *args, **kwargs):
         user_timezone = pytz.timezone("Europe/Kiev")
         if self.pubdate is None:
@@ -53,3 +57,11 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+class SubscribedUsers(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True, max_length=100)
+    created_date = models.DateTimeField('Date created', default=timezone.now)
+
+    def __str__(self):
+        return self.email

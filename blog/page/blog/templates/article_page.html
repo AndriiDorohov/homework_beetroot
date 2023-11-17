@@ -4,44 +4,31 @@
 <!-- ------------------------------------------------------------------------------------- -->
 {% block opengraph %}
 
-<meta property="og:title" content="{{ article.title | safe }}" />
-<meta
-	property="og:image"
-	content="https://{{ request.get_host }}{{ article.og_image.url}}"
-/>
-<meta
-	property="twitter:image"
-	content="https://{{ request.get_host }}{{ article.og_image.url}}"
-/>
-<link
-	rel="image_src"
-	href="https://{{ request.get_host }}{{ article.og_image.url}}"
-/>
-<meta property="og:image:width" content="600" />
-<meta property="og:image:height" content="315" />
-<meta property="og:type" content="blog" />
-<meta property="og:url" content="{{ request.build_absolute_uri }}" />
-<meta property="og:author" content="{{ author_name }}" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/like.js' %}"></script>
 
 {% endblock %}
 <!-- ------------------------------------------------------------------------------------- -->
 {% block content %}
-<div id="article-container" class="article-list">
-	<div class="article">
-		<h1 class="article-title">{{ article.title | safe }}</h1>
+<div class="current-post-article-container">
+	<div class="current-article">
+		<div class="current-post-article-category">
+			<a href="{{ article.get_category_url }}">{{ article.category }}</a>
+		</div>
+		<h1 class="current-post-article-title">{{ article.title | safe }}</h1>
+		<div class="current-post-author">
+			<h3>👤{{ article.author }}</h3>
+			<p>{{ article.pubdate|date:"F j, Y" }}</p>
+		</div>
 		<img
-			class="gallery"
+			class="current-post-gallery"
 			src="{{ article.og_image.url }}"
 			alt="Photo"
 			width="50%"
 			data-source="{{ article.og_image.url }}"
 		/>
-
-		<div class="article-text">{{ article.full_text | safe }}</div>
-
-		<div class="article-footer">
+		<div class="current-post-text">{{ article.full_text | safe }}</div>
+		<div class="current-post-footer">
 			<div class="likely-wrapper">
 				<div class="like-unlike">
 					<!-- ----------------------------------------Like up -->
@@ -67,7 +54,6 @@
 						</button>
 						{% endif %}
 					</form>
-
 					{% else %}
 					<a
 						class="btn btn-outline-info"
@@ -80,59 +66,18 @@
 					>
 					<!-- ----------------------------------------Like down -->
 				</div>
-
-				<div class="likely">
+				<!-- <div class="likely">
 					<div class="twitter">{% translate "Tweeter" %}</div>
 					<div class="facebook">{% translate "Share" %}</div>
 					<div class="telegram">{% translate "Sent" %}</div>
 					<div class="whatsapp">{% translate "WhatsApp" %}</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
-		<div>
-			📁<a href="{{ article.get_category_url }}">{{ article.category }}</a>
-
-			<h3>👤{{ article.author }}</h3>
-		</div>
 	</div>
-
-	<div class="comment-section">
-		<h3 class="section-title">{% translate "Comments" %}</h3>
-		<ul class="comment-list">
-			{% for comment in comments %}
-			<li class="comment-item">
-				<span class="comment-username">{{ comment.user.username }}:</span>
-				<span class="comment-text">{{ comment.text }}</span>
-			</li>
-			{% empty %}
-			<li class="no-comments-message">{% translate "No comments yet." %}</li>
-			{% endfor %}
-		</ul>
-
-		<h3 class="section-title">{% translate "Add a Comment" %}</h3>
-		<div class="container-creat">
-			<form method="post" action="{% url 'add_comment' article.id %}">
-				{% csrf_token %} {{ comment_form.text }}
-				<button type="submit" class="add-comment-button">
-					{% translate "Add Comment" %}
-				</button>
-			</form>
-		</div>
-	</div>
+	{% include 'partials/comment.html' %}
 </div>
+{% include 'partials/modal.html' %}
 
-<div class="lightbox js-lightbox">
-	<div class="lightbox-overlay"></div>
-
-	<div class="lightbox-content">
-		<img class="lightbox-image" src="" alt="" />
-	</div>
-
-	<button
-		type="button"
-		class="lightbox-button"
-		data-action="close-lightbox"
-	></button>
-</div>
 <script src="{% static 'js/modal.js' %}" type="module"></script>
 {% endblock %}
