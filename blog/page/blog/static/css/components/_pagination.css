@@ -9,31 +9,20 @@
 	display: inline-block;
 	padding: 8px 16px;
 	margin: 4px;
-	background-color: #ffa500;
-	color: #000;
+	background-color: #2090ff;
+	color: #ffffff;
 	text-decoration: none;
-	border: 1px solid #ffa500;
+	border: 1px solid #2090ff;
 	border-radius: 5px;
 	transition: background-color 0.3s, color 0.3s;
 }
 
 .pagination-button:hover {
-	background-color: #ff8c00;
-	border: 1px solid #ff8c00;
+	background-color: #0b71d6;
+	border: 1px solid #0b71d6;
 }
 
 .pagination-current {
-	display: inline-block;
-	padding: 8px 16px;
-	margin: 4px;
-	background-color: #ff8c00;
-	color: #fff;
-	text-decoration: none;
-	border: 1px solid #ff8c00;
-	border-radius: 5px;
-}
-
-.pagination-button-disabled {
 	display: inline-block;
 	padding: 8px 16px;
 	margin: 4px;
@@ -42,7 +31,10 @@
 	text-decoration: none;
 	border: 1px solid #333;
 	border-radius: 5px;
-	cursor: not-allowed;
+}
+
+.pagination-button-disabled {
+	display: none;
 }
 
 .icon-create {

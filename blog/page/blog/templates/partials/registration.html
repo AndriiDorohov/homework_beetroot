@@ -4,6 +4,46 @@
 <!-- ------------------------------------------------------------------------------------- -->
 
 {% block content %}
+<div class="user-profile" id="user-profile-edit">
+	<nav class="profile-navigation" id="navbar-main">
+		<div class="nav-container">
+			<a class="profile-link" href="#" target="_blank">User registration form</a>
+			<ul class="profile-menu">
+				<li class="profile-dropdown">
+					<a
+						class="dropdown-toggle"
+						href="#"
+						role="button"
+						data-toggle="dropdown"
+						aria-haspopup="true"
+						aria-expanded="false"
+					>
+					</a>
+					<div class="dropdown-menu">
+						<div class="dropdown-content"></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div
+		class="profile-banner"
+		style="
+			min-height: 600px;
+			background-image: url({% static 'img/images/luca-bravo-XJXWbfSo2f0-unsplash.jpg' %});
+			background-size: cover;
+			background-position: center top;
+		"
+	>
+		<span class="banner-overlay"></span>
+		<div class="profile-info-container">
+			<h1 class="profile-greeting">Hello {{ user.username }}</h1>
+			<p class="profile-description">
+				Here you can register on the website by entering your name, email address, and password. If the name or email address is already registered, you will be notified. Afterwards, you can create and fill out your profile.			</p>
+		</div>
+	</div>
+</div>
+
 
 <div class="registration-container">
 	<h2 class="registration-title">REGISTRATION</h2>
@@ -11,7 +51,8 @@
 		{% csrf_token %}
 		<div class="registration-form-fields">{{ form.as_p }}</div>
 		<button class="registration-button" type="submit">Register</button>
+		<button id="registration-cancel-button" type="button">Cancel</button>
 	</form>
 </div>
-
+<script src="{% static 'js/profile.js' %}"></script>
 {% endblock %}

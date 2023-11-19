@@ -18,15 +18,15 @@
 						<a href="{% url 'home_page' %}" class="menu-link current">Home</a>
 					</li>
 					<li class="menu-item">
-						<a href="{% url 'blog_page' %}" class="menu-link">Blog</a>
-					</li>
-					<li class="menu-item">
 						<a href="{% url 'single_post_page' %}" class="menu-link"
 							>Single Post</a
 						>
 					</li>
 					<li class="menu-item">
 						<a href="{% url 'pages_page' %}" class="menu-link">Pages</a>
+					</li>
+					<li class="menu-item">
+						<a href="{% url 'about_page' %}" class="menu-link">About</a>
 					</li>
 					<li class="menu-item">
 						<a href="{% url 'contact_page' %}" class="menu-link">Contact</a>
@@ -59,14 +59,21 @@
 			<div class="button-item">
 				<a href="{% url 'logout' %}" class="button-link">Logout</a>
 			</div>
+					{% if not '/profile-view/' in request.path %}
+						<div class="button-item">
+							<a href="{% url 'profile-view' %}" class="button-link">Profile</a>
+						</div>
+					{% endif %}
+
 			{% else %}
 			<div class="button-item">
 				<a href="{% url 'login' %}" class="button-link">Login</a>
 			</div>
-			{% endif %}
+
 			<div class="button-item">
 				<a href="{% url 'registration' %}" class="button-link">Registration</a>
 			</div>
+			{% endif %}
 		</div>
 	</div>
 </header>

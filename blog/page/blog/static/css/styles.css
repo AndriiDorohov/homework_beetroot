@@ -6,7 +6,10 @@
 @import "./layout/_footer.css";
 @import "./layout/_home_page.css";
 @import "./layout/_article_page.css";
+@import "./layout/_search_page.css";
 @import "./layout/_hero_author.css";
+@import "./layout/_about_page.css";
+@import "./layout/_contact_page.css";
 
 @import "./components/_comments.css";
 @import "./components/_like.css";
@@ -15,3 +18,5 @@
 @import "./components/_form_creat.css";
 @import "./components/_form_login.css";
 @import "./components/_form_register.css";
+@import "./components/_profile_view.css";
+@import "./components/_profile_edit.css";

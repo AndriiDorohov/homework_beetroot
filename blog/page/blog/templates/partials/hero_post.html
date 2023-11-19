@@ -18,7 +18,16 @@
 		</h2>
 		<div class="hero-article-footer">
 			<div class="hero-article-footer-items">
-				<h3>👤{{ specific_article.author }}</h3>
+				<a
+					class="hero-article-footer-author"
+					href="{{ specific_article.get_author_url }}"
+					><img
+						class="hero-article-footer-avatar"
+						src="{{ specific_article.author.profile.image.url }}"
+						alt="{{ article.author.username }}"
+					/>
+					{{ specific_article.author }}</a
+				>
 				<p>{{ specific_article.pubdate|date:"F j, Y" }}</p>
 			</div>
 		</div>

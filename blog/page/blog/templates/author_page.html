@@ -3,13 +3,11 @@
 {% block title %}{{ author_name }}: {{ article.title | safe }} {% endblock %}
 <!-- ------------------------------------------------------------------------------------- -->
 
-<!-- ------------------------------------------------------------------------------------- -->
 {% block content %} {% include 'partials/hero_author.html' %}
-
 <div class="page-container">
 	<h2 class="latest-post-title">Latest Post</h2>
 	<div class="article-container">
-		{% for article in articles %}
+		{% for article in page.object_list %}
 		<div class="article-wrapper">
 			<div class="article-cover">
 				<a href="{{ article.get_absolute_url }}">
@@ -28,7 +26,12 @@
 				<div class="article-footer">
 					<div class="article-footer-items">
 						<a class="article-footer-author" href="{{ article.get_author_url }}"
-							>👤{{ article.author }}</a
+							><img
+								class="article-footer-avatar"
+								src="{{ article.author.profile.image.url }}"
+								alt="{{ article.author.username }}"
+							/>
+							{{ article.author.username }}</a
 						>
 						<p>{{ article.pubdate|date:"F j, Y" }}</p>
 					</div>
@@ -37,8 +40,10 @@
 		</div>
 		{% endfor %}
 	</div>
-	{% if not show_pagination %}
-	<p>{ show_pagination }</p>
-	{% else %} {% include "partials/pagination.html" %} {% endif %}
+	{% if show_pagination %}
+	<!-- ------------------------------------------------------------------------------------- -->
+	{% else %}
+	<!-- ------------------------------------------------------------------------------------- -->
+	{% include "partials/pagination.html"%} {% endif %}
 </div>
 {% endblock content %}

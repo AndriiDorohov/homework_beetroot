@@ -1,4 +1,4 @@
-from .models import Article, Comment
+from .models import Article, Comment, Profile
 
 from .forms import (
     ArticleForm,
@@ -13,9 +13,11 @@ from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import gettext as _
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -31,6 +33,8 @@ from .forms import NewsletterForm
 from .models import SubscribedUsers
 from .decorators import user_is_superuser
 
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+
 
 global_context = {
     "author_name": _("Andrii Dorokhov"),
@@ -41,7 +45,7 @@ def home_page(request):
     articles = Article.objects.all().order_by("-pubdate")
     context = global_context | {"articles": articles}
     page_number = request.GET.get("page", 1)
-    items_per_page = 5
+    items_per_page = 6
     paginated = Paginator(articles, items_per_page)
     try:
         page = paginated.page(page_number)
@@ -65,9 +69,9 @@ def home_page(request):
     )
 
 
-def blog_page(request):
+def about_page(request):
     context = global_context
-    return render(request, "blog_page.html", context)
+    return render(request, "about_page.html", context)
 
 
 def single_post_page(request):
@@ -109,9 +113,31 @@ def category_page(request, category):
     return render(request, "category_page.html", context)
 
 def author_page(request, author_name):
-    articles = Article.objects.filter(author_name=author_name)
+    articles = Article.objects.filter(author_name=author_name).order_by("-pubdate")
     context = global_context | {"articles": articles, "author": author_name}
-    return render(request, "author_page.html", context)
+    page_number = request.GET.get("page", 1)
+    items_per_page = 6
+    paginated = Paginator(articles, items_per_page)
+    try:
+        page = paginated.page(page_number)
+    except PageNotAnInteger:
+        page = paginated.page(1)
+    except EmptyPage:
+        page = paginated.page(paginated.num_pages)
+
+    specific_article = Article.objects.first()
+
+    show_pagination = paginated.num_pages == 1
+    return render(
+        request,
+        "author_page.html",
+        {
+            "page": page,
+            "specific_article": specific_article,
+            **context,
+            "show_pagination": show_pagination,
+        },
+    )
 
 def create_article(request):
     if request.method == "POST":
@@ -119,8 +145,9 @@ def create_article(request):
         if form.is_valid():
             article = form.save(commit=False)
             article.author = request.user
+            article.author_name = request.user.username
             article.save()
-
+            # article.likes.set([request.user.id])
             messages.success(request, _("Article has been created successfully."))
 
             return redirect("home_page")
@@ -154,21 +181,34 @@ def article_like(request, article_id):
 
     return HttpResponseRedirect(reverse("article_page", args=[article.slug]))
 
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from .forms import RegistrationForm
+from .models import Profile
 
 def registration(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
             username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password1")
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect("home_page")
+            email = form.cleaned_data.get("email")
+
+            if User.objects.filter(username=username).exists():
+                messages.error(request, "This username is already taken.")
+            elif User.objects.filter(email=email).exists():
+                messages.error(request, "This mailbox is already registered.")
+            else:
+                user = form.save(commit=False)
+                user.save()
+                Profile.objects.create(user=user, email=email)
+                raw_password = form.cleaned_data.get("password1")
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
+                return redirect("home_page")
     else:
         form = RegistrationForm()
     return render(request, "./partials/registration.html", {"form": form})
-
 
 def user_login(request):
     if request.method == "POST":
@@ -189,8 +229,7 @@ def article_search(request):
     search_form = ArticleSearchForm(request.GET)
     query = request.GET.get("query", "")
 
-    articles = Article.objects.filter(title__icontains=query)
-
+    articles = Article.objects.filter(Q(title__icontains=query) | Q(category__icontains=query) | Q(full_text__icontains=query))
     context = {
         "search_form": search_form,
         "articles": articles,
@@ -198,46 +237,127 @@ def article_search(request):
 
     return render(request, "search_results.html", context)
 
+class ArticleDetailView(DetailView):
+    model = Article
+    # template_name = "article_detail.html"
 
-def subscribe(request):
-    if request.method == "POST":
-        name = request.POST.get("name", None)
-        email = request.POST.get("email", None)
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
 
-        if not name or not email:
-            messages.error(
-                request,
-                "You must type legit name and email to subscribe to a Newsletter",
-            )
-            return redirect("/")
+        article = get_object_or_404(Article, slug=self.kwargs["slug"])
+        liked = False
+        if article.likes.filter(id=self.request.user.id).exists():
+            liked = True
+        data["total_likes"] = article.total_likes()
+        data["article_is_liked"] = liked
+        return data
 
-        if User.objects.filter(email=email).exists():
-            messages.error(
-                request,
-                f"Found registered user with associated {email} email. You must login to subscribe or unsubscribe.",
-            )
-            return redirect(request.META.get("HTTP_REFERER", "/"))
-
-        subscribe_user = SubscribedUsers.objects.filter(email=email).first()
-        if subscribe_user:
-            messages.error(request, f"{email} email address is already subscriber.")
-            return redirect(request.META.get("HTTP_REFERER", "/"))
-
+@login_required
+def profile(request):
+    user = request.user
+    article_count = Article.objects.filter(author=user).count()
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
         try:
-            validate_email(email)
-        except ValidationError as e:
-            messages.error(request, e.messages[0])
-            return redirect("/")
+            profile = request.user.profile
+        except Profile.DoesNotExist:
+            profile = None
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
 
-        subscribe_model_instance = SubscribedUsers()
-        subscribe_model_instance.name = name
-        subscribe_model_instance.email = email
-        subscribe_model_instance.save()
-        messages.success(
-            request, f"{email} email was successfully subscribed to our newsletter!"
-        )
-        return redirect(request.META.get("HTTP_REFERER", "/"))
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            if profile:
+                p_form.save()
+            else:
+                new_profile = p_form.save(commit=False)
+                new_profile.user = request.user
+                new_profile.save()
+            messages.success(request, 'Your account has been updated!')
+            return redirect('profile')
 
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        try:
+            profile = request.user.profile
+        except Profile.DoesNotExist:
+            profile = None
+        p_form = ProfileUpdateForm(instance=profile)
+
+    context = {
+        'user': user,
+        'article_count': article_count,
+        'u_form': u_form,
+        'p_form': p_form
+    }
+
+    return render(request, 'partials/profile_edit.html', context)
+
+
+# @login_required
+# def profile_view(request):
+#     user = request.user
+#     article_count = Article.objects.filter(author=user).count()
+#     if request.method == 'POST':
+#         u_form = UserUpdateForm(request.POST, instance=request.user)
+#         try:
+#             profile = request.user.profile
+#         except Profile.DoesNotExist:
+#             profile = None
+#         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
+
+#         if u_form.is_valid() and p_form.is_valid():
+#             u_form.save()
+#             if profile:
+#                 p_form.save()
+#             else:
+#                 new_profile = p_form.save(commit=False)
+#                 new_profile.user = request.user
+#                 new_profile.save()
+#             messages.success(request, 'Your account has been updated!')
+#             return redirect('profile')
+
+#     else:
+#         u_form = UserUpdateForm(instance=request.user)
+#         try:
+#             profile = request.user.profile
+#         except Profile.DoesNotExist:
+#             profile = None
+#         p_form = ProfileUpdateForm(instance=profile)
+
+#     context = {
+#         'user': user,
+#         'article_count': article_count,
+#         'u_form': u_form,
+#         'p_form': p_form
+#     }
+
+#     return render(request, 'partials/profile_view.html', context)
+@login_required
+def profile_view(request):
+    user = request.user
+    article_count = Article.objects.filter(author=user).count()
+
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        profile = None
+
+    if request.method == 'POST':
+        messages.info(request, 'You cannot update profile data here.')
+        return redirect('profile')
+
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=profile)
+
+    context = {
+        'user': user,
+        'article_count': article_count,
+        'u_form': u_form,
+        'p_form': p_form
+    }
+
+    return render(request, 'partials/profile_view.html', context)
 
 @user_is_superuser
 def newsletter(request):
@@ -261,18 +381,57 @@ def newsletter(request):
 
     return render(request, "newsletter.html")
 
+def subscribe(request):
+    if request.method == "POST":
+        return handle_subscription(request)
+    return redirect("/")
 
-class ArticleDetailView(DetailView):
-    model = Article
-    # template_name = "article_detail.html"
+def handle_subscription(request):
+    name = request.POST.get("name", None)
+    email = request.POST.get("email", None)
 
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
+    if not name or not email:
+        return handle_invalid_subscription(request)
 
-        article = get_object_or_404(Article, slug=self.kwargs["slug"])
-        liked = False
-        if article.likes.filter(id=self.request.user.id).exists():
-            liked = True
-        data["total_likes"] = article.total_likes()
-        data["article_is_liked"] = liked
-        return data
+    if User.objects.filter(email=email).exists():
+        return handle_existing_user(request, email)
+
+    subscribe_user = SubscribedUsers.objects.filter(email=email).first()
+    if subscribe_user:
+        return handle_existing_subscriber(request, email)
+
+    return create_new_subscription(request, name, email)
+
+def handle_invalid_subscription(request):
+    messages.error(
+        request,
+        "You must type a valid name and email to subscribe to the Newsletter",
+    )
+    return redirect("/")
+
+def handle_existing_user(request, email):
+    messages.error(
+        request,
+        f"Found a registered user with the associated {email} email. You must log in to subscribe or unsubscribe.",
+    )
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+def handle_existing_subscriber(request, email):
+    messages.error(request, f"{email} email address is already subscribed.")
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+def create_new_subscription(request, name, email):
+    try:
+        validate_email(email)
+    except ValidationError as e:
+        messages.error(request, e.messages[0])
+        return redirect("/")
+
+    subscribe_model_instance = SubscribedUsers()
+    subscribe_model_instance.name = name
+    subscribe_model_instance.email = email
+    subscribe_model_instance.save()
+    messages.success(
+        request, f"{email} email was successfully subscribed to our newsletter!"
+    )
+    return redirect(request.META.get("HTTP_REFERER", "/"))

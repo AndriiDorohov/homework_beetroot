@@ -5,7 +5,49 @@
 
 <!-- ------------------------------------------------------------------------------------- -->
 
+
 {% block content %}
+<div class="user-profile" id="user-profile-edit">
+	<nav class="profile-navigation" id="navbar-main">
+		<div class="nav-container">
+			<a class="profile-link" href="#" target="_blank">User login form</a>
+			<ul class="profile-menu">
+				<li class="profile-dropdown">
+					<a
+						class="dropdown-toggle"
+						href="#"
+						role="button"
+						data-toggle="dropdown"
+						aria-haspopup="true"
+						aria-expanded="false"
+					>
+					</a>
+					<div class="dropdown-menu">
+						<div class="dropdown-content"></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div
+		class="profile-banner"
+		style="
+			min-height: 600px;
+			background-image: url({% static 'img/images/luca-bravo-XJXWbfSo2f0-unsplash.jpg' %});
+			background-size: cover;
+			background-position: center top;
+		"
+	>
+		<span class="banner-overlay"></span>
+		<div class="profile-info-container">
+			<h1 class="profile-greeting">Hello {{ user.username }}</h1>
+			<p class="profile-description">
+				Here you can enter your username and the password you provided during registration.
+			</p>
+		</div>
+	</div>
+</div>
+
 
 <div class="form-login-container">
 	<h2 class="form-login-title">LOGIN</h2>

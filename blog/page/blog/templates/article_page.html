@@ -17,7 +17,13 @@
 		</div>
 		<h1 class="current-post-article-title">{{ article.title | safe }}</h1>
 		<div class="current-post-author">
-			<h3>👤{{ article.author }}</h3>
+			<a class="current-post-footer-author" href="{{ article.get_author_url }}"
+				><img
+					class="current-post-footer-avatar"
+					src="{{ article.author.profile.image.url }}"
+					alt="{{ article.author }}"
+				/>{{ article.author }}</a
+			>
 			<p>{{ article.pubdate|date:"F j, Y" }}</p>
 		</div>
 		<img

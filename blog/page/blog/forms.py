@@ -1,5 +1,5 @@
 from django import forms
-from .models import Article
+from .models import Article, Profile
 from django.forms import ModelForm, TextInput, Textarea, Select, FileInput
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -58,3 +58,46 @@ class NewsletterForm(forms.Form):
     subject = forms.CharField()
     receivers = forms.CharField()
     message = forms.CharField(widget=TinyMCE(), label="Email content")
+
+
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        email = cleaned_data.get('email')
+
+        # Перевірка на унікальність імені користувача
+        if User.objects.filter(username=username).exists():
+            self.add_error('username', 'Це ім\'я користувача вже зайняте.')
+
+        # Перевірка на унікальність поштової скриньки
+        if User.objects.filter(email=email).exists():
+            self.add_error('email', 'Ця поштова скринька вже зареєстрована.')
+
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+class ProfileUpdateForm(forms.ModelForm):
+    telephone = forms.CharField(max_length=15, required=False)
+    bio = forms.CharField(widget=forms.Textarea, required=False)
+    location = forms.CharField(max_length=100, required=False)
+    birth_date = forms.DateField(required=False)
+    twitter_url = forms.URLField(required=False)
+    facebook_url = forms.URLField(required=False)
+    instagram_url = forms.URLField(required=False)
+    youtube_url = forms.URLField(required=False)
+    image = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'form-profile-image'}))
+
+
+    class Meta:
+        model = Profile
+        fields = ['telephone', 'bio', 'location', 'birth_date', 'twitter_url', 'facebook_url', 'instagram_url', 'youtube_url', 'image']
